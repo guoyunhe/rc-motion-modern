@@ -1,17 +1,23 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2015",
     "moduleResolution": "node",
-    "baseUrl": "./",
-    "jsx": "react",
-    "declaration": true,
+    "jsx": "react-jsx",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@@/*": ["src/.umi/*"],
-      "rc-motion": ["src/index.tsx"],
-      "rc-motion/es/*": ["src/*"]
-    }
-  }
+      "@/*": ["./src/*"],
+      "@@/*": ["./src/.umi/*"],
+      "rc-motion": ["./src/index.tsx"],
+      "rc-motion/es/*": ["./src/*"]
+    },
+    "lib": ["esnext", "dom", "dom.iterable"],
+    "allowJs": true,
+    "checkJs": false,
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "types": ["node", "rive/globals"]
+  },
+  "exclude": [".rive", "build", "coverage", "dist", "node_modules"]
 }

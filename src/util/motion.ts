@@ -1,4 +1,4 @@
-import canUseDOM from 'rc-util/lib/Dom/canUseDom';
+import canUseDOM from 'rc-util-modern/dist/Dom/canUseDom';
 import { MotionName } from '../CSSMotion';
 
 // ================= Transition =================
@@ -37,10 +37,7 @@ export function getVendorPrefixes(domSupport: boolean, win: object) {
   return prefixes;
 }
 
-const vendorPrefixes = getVendorPrefixes(
-  canUseDOM(),
-  typeof window !== 'undefined' ? window : {},
-);
+const vendorPrefixes = getVendorPrefixes(canUseDOM(), typeof window !== 'undefined' ? window : {});
 
 let style = {};
 
@@ -62,10 +59,7 @@ export function getVendorPrefixedEventName(eventName: string) {
     const len = stylePropList.length;
     for (let i = 0; i < len; i += 1) {
       const styleProp = stylePropList[i];
-      if (
-        Object.prototype.hasOwnProperty.call(prefixMap, styleProp) &&
-        styleProp in style
-      ) {
+      if (Object.prototype.hasOwnProperty.call(prefixMap, styleProp) && styleProp in style) {
         prefixedEventNames[eventName] = prefixMap[styleProp];
         return prefixedEventNames[eventName];
       }
@@ -77,23 +71,16 @@ export function getVendorPrefixedEventName(eventName: string) {
 
 const internalAnimationEndName = getVendorPrefixedEventName('animationend');
 const internalTransitionEndName = getVendorPrefixedEventName('transitionend');
-export const supportTransition = !!(
-  internalAnimationEndName && internalTransitionEndName
-);
+export const supportTransition = !!(internalAnimationEndName && internalTransitionEndName);
 
 export const animationEndName = internalAnimationEndName || 'animationend';
 export const transitionEndName = internalTransitionEndName || 'transitionend';
 
-export function getTransitionName(
-  transitionName: MotionName,
-  transitionType: string,
-) {
+export function getTransitionName(transitionName: MotionName, transitionType: string) {
   if (!transitionName) return null;
 
   if (typeof transitionName === 'object') {
-    const type = transitionType.replace(/-\w/g, match =>
-      match[1].toUpperCase(),
-    );
+    const type = transitionType.replace(/-\w/g, (match) => match[1].toUpperCase());
     return transitionName[type];
   }
 

@@ -1,9 +1,9 @@
-import raf from 'rc-util/lib/raf';
+import raf from 'rc-util-modern/dist/raf';
 import * as React from 'react';
 
 export default (): [
   (callback: (info: { isCanceled: () => boolean }) => void) => void,
-  () => void,
+  () => void
 ] => {
   const nextFrameRef = React.useRef<number>(null);
 
@@ -11,10 +11,7 @@ export default (): [
     raf.cancel(nextFrameRef.current);
   }
 
-  function nextFrame(
-    callback: (info: { isCanceled: () => boolean }) => void,
-    delay = 2,
-  ) {
+  function nextFrame(callback: (info: { isCanceled: () => boolean }) => void, delay = 2) {
     cancelNextFrame();
 
     const nextFrameId = raf(() => {
@@ -32,7 +29,7 @@ export default (): [
     () => () => {
       cancelNextFrame();
     },
-    [],
+    []
   );
 
   return [nextFrame, cancelNextFrame];

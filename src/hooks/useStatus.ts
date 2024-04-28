@@ -1,4 +1,4 @@
-import useState from 'rc-util/lib/hooks/useState';
+import useState from 'rc-util-modern/dist/hooks/useState';
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
 import type { CSSMotionProps } from '../CSSMotion';
@@ -21,7 +21,7 @@ import {
 } from '../interface';
 import useDomMotionEvents from './useDomMotionEvents';
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
-import useStepQueue, { DoStep, isActive, SkipStep } from './useStepQueue';
+import useStepQueue, { DoStep, SkipStep, isActive } from './useStepQueue';
 
 export default function useStatus(
   supportMotion: boolean,
@@ -46,7 +46,7 @@ export default function useStatus(
     onEnterEnd,
     onLeaveEnd,
     onVisibleChanged,
-  }: CSSMotionProps,
+  }: CSSMotionProps
 ): [MotionStatus, StepStatus, React.CSSProperties, boolean] {
   // Used for outer render usage to avoid `visible: false & status: none` to render nothing
   const [asyncVisible, setAsyncVisible] = useState<boolean>();
@@ -135,7 +135,7 @@ export default function useStatus(
     [STEP_ACTIVE]?: MotionEventHandler;
   }>(() => getEventHandlers(status), [status]);
 
-  const [startStep, step] = useStepQueue(status, !supportMotion, newStep => {
+  const [startStep, step] = useStepQueue(status, !supportMotion, (newStep) => {
     // Only prepare step can be skip
     if (newStep === STEP_PREPARE) {
       const onPrepare = eventHandlers[STEP_PREPARE];
@@ -239,7 +239,7 @@ export default function useStatus(
       mountedRef.current = false;
       clearTimeout(deadlineRef.current);
     },
-    [],
+    []
   );
 
   // Trigger `onVisibleChanged`

@@ -1,11 +1,11 @@
 /* eslint-disable react/default-props-match-prop-types, react/no-multi-comp, react/prop-types */
 import classNames from 'classnames';
-import findDOMNode from 'rc-util/lib/Dom/findDOMNode';
-import { fillRef, supportRef } from 'rc-util/lib/ref';
+import findDOMNode from 'rc-util-modern/dist/Dom/findDOMNode';
+import { fillRef, supportRef } from 'rc-util-modern/dist/ref';
 import * as React from 'react';
 import { useRef } from 'react';
-import { Context } from './context';
 import DomWrapper from './DomWrapper';
+import { Context } from './context';
 import useStatus from './hooks/useStatus';
 import { isActive } from './hooks/useStepQueue';
 import type {
@@ -91,7 +91,7 @@ export interface CSSMotionProps {
       style?: React.CSSProperties;
       [key: string]: any;
     },
-    ref: (node: any) => void,
+    ref: (node: any) => void
   ) => React.ReactElement;
 }
 
@@ -108,7 +108,7 @@ export interface CSSMotionState {
  * Default we use browser transition event support check.
  */
 export function genCSSMotion(
-  config: CSSMotionConfig,
+  config: CSSMotionConfig
 ): React.ForwardRefExoticComponent<CSSMotionProps & { ref?: React.Ref<any> }> {
   let transitionSupport = config;
 
@@ -161,7 +161,7 @@ export function genCSSMotion(
       supportMotion,
       visible,
       getDomElement,
-      props,
+      props
     );
 
     // Record whether content has rendered
@@ -177,7 +177,7 @@ export function genCSSMotion(
         nodeRef.current = node;
         fillRef(ref, node);
       },
-      [ref],
+      [ref]
     );
 
     // ===================== Render =====================
@@ -192,15 +192,9 @@ export function genCSSMotion(
       if (mergedVisible) {
         motionChildren = children({ ...mergedProps }, setNodeRef);
       } else if (!removeOnLeave && renderedRef.current && leavedClassName) {
-        motionChildren = children(
-          { ...mergedProps, className: leavedClassName },
-          setNodeRef,
-        );
+        motionChildren = children({ ...mergedProps, className: leavedClassName }, setNodeRef);
       } else if (forceRender || (!removeOnLeave && !leavedClassName)) {
-        motionChildren = children(
-          { ...mergedProps, style: { display: 'none' } },
-          setNodeRef,
-        );
+        motionChildren = children({ ...mergedProps, style: { display: 'none' } }, setNodeRef);
       } else {
         motionChildren = null;
       }
@@ -215,10 +209,7 @@ export function genCSSMotion(
         statusSuffix = 'start';
       }
 
-      const motionCls = getTransitionName(
-        motionName,
-        `${status}-${statusSuffix}`,
-      );
+      const motionCls = getTransitionName(motionName, `${status}-${statusSuffix}`);
 
       motionChildren = children(
         {
@@ -229,7 +220,7 @@ export function genCSSMotion(
           }),
           style: statusStyle,
         },
-        setNodeRef,
+        setNodeRef
       );
     }
 

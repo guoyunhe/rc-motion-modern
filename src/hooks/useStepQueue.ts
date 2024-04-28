@@ -1,4 +1,4 @@
-import useState from 'rc-util/lib/hooks/useState';
+import useState from 'rc-util-modern/dist/hooks/useState';
 import * as React from 'react';
 import type { MotionStatus, StepStatus } from '../interface';
 import {
@@ -12,12 +12,7 @@ import {
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 import useNextFrame from './useNextFrame';
 
-const FULL_STEP_QUEUE: StepStatus[] = [
-  STEP_PREPARE,
-  STEP_START,
-  STEP_ACTIVE,
-  STEP_ACTIVATED,
-];
+const FULL_STEP_QUEUE: StepStatus[] = [STEP_PREPARE, STEP_START, STEP_ACTIVE, STEP_ACTIVATED];
 
 const SIMPLE_STEP_QUEUE: StepStatus[] = [STEP_PREPARE, STEP_PREPARED];
 
@@ -33,9 +28,7 @@ export function isActive(step: StepStatus) {
 export default (
   status: MotionStatus,
   prepareOnly: boolean,
-  callback: (
-    step: StepStatus,
-  ) => Promise<void> | void | typeof SkipStep | typeof DoStep,
+  callback: (step: StepStatus) => Promise<void> | void | typeof SkipStep | typeof DoStep
 ): [() => void, StepStatus] => {
   const [step, setStep] = useState<StepStatus>(STEP_NONE);
 
@@ -59,7 +52,7 @@ export default (
         setStep(nextStep, true);
       } else if (nextStep) {
         // Do as frame for step update
-        nextFrame(info => {
+        nextFrame((info) => {
           function doNext() {
             // Skip since current queue is ood
             if (info.isCanceled()) return;
@@ -82,7 +75,7 @@ export default (
     () => () => {
       cancelNextFrame();
     },
-    [],
+    []
   );
 
   return [startQueue, step];

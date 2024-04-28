@@ -1,7 +1,7 @@
 {
-  "name": "rc-motion",
-  "version": "2.9.0",
-  "description": "React lifecycle controlled motion library",
+  "name": "rc-motion-modern",
+  "version": "2.9.1",
+  "description": "React lifecycle controlled motion library (for Chrome 86+)",
   "keywords": [
     "react",
     "react-component",
@@ -10,34 +10,34 @@
     "antd",
     "ant-design"
   ],
-  "homepage": "https://react-component.github.io/motion",
+  "homepage": "https://github.com/guoyunhe/rc-motion-modern",
   "bugs": {
-    "url": "http://github.com/react-component/motion/issues"
+    "url": "https://github.com/guoyunhe/rc-motion-modern/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:react-component/motion.git"
+    "url": "git@github.com:guoyunhe/rc-motion-modern.git"
   },
+  "funding": "https://github.com/sponsors/guoyunhe",
   "license": "MIT",
-  "main": "./lib/index",
-  "module": "./es/index",
-  "typings": "es/index.d.ts",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "es",
-    "lib"
+    "dist",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
-    "compile": "father build",
-    "docs:build": "dumi build",
-    "docs:deploy": "gh-pages -d .doc",
-    "lint": "eslint src/ --ext .tsx,.ts",
-    "now-build": "npm run docs:build",
-    "prepare": "husky install",
-    "prepublishOnly": "npm run compile && np --yolo --no-publish",
-    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
-    "postpublish": "npm run docs:build && npm run docs:deploy",
-    "start": "dumi dev",
-    "test": "rc-test"
+    "build": "rive build",
+    "build:watch": "rive build --watch",
+    "lint": "rive lint",
+    "lint:fix": "rive lint --fix",
+    "start": "rive start",
+    "test": "rive test",
+    "test:ui": "rive test --ui",
+    "test:watch": "rive test --watch"
   },
   "lint-staged": {
     "**/*.{js,jsx,tsx,ts,md,json}": [
@@ -45,40 +45,52 @@
       "git add"
     ]
   },
+  "prettier": "prettier-config-rive",
+  "eslintConfig": {
+    "extends": "eslint-config-rive/react"
+  },
+  "stylelint": {
+    "extends": "stylelint-config-rive"
+  },
   "dependencies": {
-    "@babel/runtime": "^7.11.1",
-    "classnames": "^2.2.1",
-    "rc-util": "^5.21.0"
+    "classnames": "^2.5.1",
+    "rc-util-modern": "^5.39.1"
   },
   "devDependencies": {
-    "@rc-component/father-plugin": "^1.0.1",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.0.0",
-    "@types/classnames": "^2.2.9",
-    "@types/jest": "^26.0.8",
-    "@types/react": "^16.9.2",
-    "@types/react-dom": "^16.9.0",
-    "@umijs/fabric": "^2.0.8",
-    "cross-env": "^7.0.2",
-    "dumi": "^2.0.18",
-    "eslint": "^7.0.0",
-    "father": "^4.1.2",
-    "gh-pages": "^6.0.0",
+    "@mdx-js/react": "^3.0.1",
+    "@rc-component/father-plugin": "^1.0.2",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^15.0.5",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "@umijs/fabric": "^2.14.1",
+    "cross-env": "^7.0.3",
+    "father": "^4.4.0",
+    "gh-pages": "^6.1.1",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
-    "np": "^6.2.4",
-    "prettier": "^2.1.1",
-    "rc-test": "^7.0.14",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "typescript": "^4.0.3"
+    "rc-test": "^7.0.15",
+    "react": "^18.3.1",
+    "react-doc-ui": "^2.2.6",
+    "react-dom": "^18.3.1",
+    "rive": "^2.0.33",
+    "typescript": "^5.4.5",
+    "whatwg-fetch": "^3.6.20"
   },
   "peerDependencies": {
-    "react": ">=16.9.0",
+    "react": "^18.0.0 || ^17.0.0 || ^16.8.0",
     "react-dom": ">=16.9.0"
   },
   "cnpm": {
     "mode": "npm"
+  },
+  "rive": {
+    "template": "react",
+    "doc": {
+      "disabled": true
+    }
   },
   "tnpm": {
     "mode": "npm"
